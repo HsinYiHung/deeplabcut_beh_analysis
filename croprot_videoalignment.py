@@ -16,7 +16,7 @@ import cv2
 ### Read the HDF5 file
 filename = "/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/012122 Spider Piezo 5Hz 75 182 With Pulses 2Sdelayed 2-01212022132058-0000-1_trimmedDLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000.h5"
 
-f1 = h5py.File(filename.split('/videos/')[0] +'/videos/aligned/'+filename.split('/videos/')[1],'r+')
+f1 = h5py.File(filename,'r+')
 data_joints = f1['df_with_missing']['table'][:]
 
 ### Video name 
@@ -103,9 +103,7 @@ ay = np.nanmean(anterior_y,axis =0)[i]
     
 px = np.nanmean(posterior_x,axis =0)[i]
 py = np.nanmean(posterior_y,axis =0)[i]
-    
 
-    
     
 new_img = np.copy(img)
 slope = -(py-ay)/(px-ax)
@@ -132,34 +130,12 @@ else:
             
 M = cv2.getRotationMatrix2D(center, rot_degree, scale=1)
 
-joints_new = np.copy(joints)
-for j in range(0,60,3):
-    tempx = joints[j]
-    tempy = joints[j+1]
-    newy = center[0]+M[0][0]*(tempy-center[0]) + (tempx-center[1])*M[1][0]
-    newx = center[1]+M[0][1]*(tempy-center[0]) + (tempx-center[1])*M[1][1]
-    joints_new[j] = newx
-    joints_new[j+1] = newy
-
-
-
-
-
-data = f1['df_with_missing']
-data_temp = np.copy(data['table'])
-
 
 for i in range(len(buf)):
     new_img = np.copy(buf[i])
     rotated = cv2.warpAffine(new_img, M, (n_w,n_h))
     buf_new[i] = rotated
     
-    #f1['df_with_missing']['table'][:][i][1] = joints_new[:,i]
-    #data['table'][:][i][1] = joints_new[:,i]
-    data_temp[:][i][1] = joints_new[:,i]
-del data['table']
-data['table'] = data_temp
-f1.close() 
 
 
 
