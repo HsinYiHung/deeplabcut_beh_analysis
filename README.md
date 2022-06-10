@@ -13,10 +13,8 @@
       * Use joint coordinates to estimate the center and the orientation of the spider
       * Calculate the rotation matrix based on the first frame of the video
       * Rotate the videos to make them have the same orientation
-4. Do interpolation again
-  * Do interpolation on the `_croprotalignment.mp4`
-5. Do joint angle analysis
-6. Do behavioral analysis
+4. Do joint angle analysis
+5. Do behavioral analysis
 
 
 
