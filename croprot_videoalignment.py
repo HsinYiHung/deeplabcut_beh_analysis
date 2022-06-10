@@ -14,8 +14,9 @@ import cv2
 
 
 ### Read the HDF5 file
-filename = "/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/012122 Spider Piezo 5Hz 75 182 With Pulses 2Sdelayed 2-01212022132058-0000-1_trimmedDLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000.h5"
+filename = "/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/011922 Spider Piezo 5Hz 0 107 With Pulses 2Sdelayed-01192022153653-0000-1DLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000.h5"
 
+#f1 = h5py.File(filename.split('/videos/')[0] +'/videos/aligned/'+filename.split('/videos/')[1],'r+')
 f1 = h5py.File(filename,'r+')
 data_joints = f1['df_with_missing']['table'][:]
 
@@ -130,12 +131,51 @@ else:
             
 M = cv2.getRotationMatrix2D(center, rot_degree, scale=1)
 
+joints_new = np.copy(joints)
+for j in range(0,60,3):
+    tempx = joints[j]
+    if py<ay:
+        tempy = joints[j+1]
+    else:
+        tempy = n_h-joints[j+1]
+    newy = center[0]+M[0][0]*(tempy-center[0]) + (tempx-center[1])*M[1][0]
+    newx = center[1]+M[0][1]*(tempy-center[0]) + (tempx-center[1])*M[1][1]
+    joints_new[j] = newx
+    joints_new[j+1] = newy
+    
+    
+#data = f1['df_with_missing']
+#data_temp = np.copy(data['table'])
+
+cmap = matplotlib.cm.get_cmap('rainbow')
+rgb = []
+rgb_angle=[]
+
+
+for i in range(num_joints):
+    rgb.append( list(cmap(i/num_joints)))
+    
+
 
 for i in range(len(buf)):
     new_img = np.copy(buf[i])
     rotated = cv2.warpAffine(new_img, M, (n_w,n_h))
     buf_new[i] = rotated
     
+    for j in range(0,60,3):
+        c = tuple([s * 255 for s in rgb[int(j/3)]][0:3])
+        c  =c[::-1]
+        
+        if joints_new[j+2][i]>0.5:
+            
+            buf_new[i] = cv2.circle(buf_new[i], (int(joints_new[j][i]),int(joints_new[j+1][i])), radius=10, color=c, thickness=-1)
+    
+    #f1['df_with_missing']['table'][:][i][1] = joints_new[:,i]
+    #data['table'][:][i][1] = joints_new[:,i]
+    #data_temp[:][i][1] = joints_new[:,i]
+#del data['table']
+#data['table'] = data_temp
+f1.close() 
 
 
 
@@ -147,7 +187,7 @@ for i in range(len(buf_new)):
     out.write(buf_new[i])
 out.release()
 
-
+np.save(vid_name.split('/videos')[0]+'/videos/aligned/'+vid_name.split('/videos')[1].replace(".mp4", "_croprotaligned.npy"), joints_new)
 #FFMpegWriter = manimation.writers['ffmpeg']
 #metadata = dict(title='Movie Test', artist='Matplotlib',
 #                comment='Movie support!') 
