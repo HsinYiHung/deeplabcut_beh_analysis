@@ -14,7 +14,7 @@ import cv2
 
 
 ### Read the HDF5 file
-filename = "/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/1101 Spider Piezo 5Hz 0 107 With Pulses 2Sdelayed 2-11012021154002-0000-1_cropDLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000.h5"
+filename = "/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/111021 Spider Prey-11102021162153-0000-1DLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000.h5"
 
 #f1 = h5py.File(filename.split('/videos/')[0] +'/videos/aligned/'+filename.split('/videos/')[1],'r+')
 f1 = h5py.File(filename,'r+')
@@ -69,10 +69,12 @@ fc = 0
 ret = True
 
 while (fc < frameCount-1  and ret):
-    ret, buf[fc] = cap.read()
-    buf[fc]= cv2.cvtColor(buf[fc], cv2.COLOR_BGR2RGB)
-    fc += 1
-
+    try:
+        ret, buf[fc] = cap.read()
+        buf[fc]= cv2.cvtColor(buf[fc], cv2.COLOR_BGR2RGB)
+        fc += 1
+    except:
+        pass
 cap.release()
 
 
@@ -138,8 +140,10 @@ for j in range(0,60,3):
         tempy = joints[j+1]
     else:
         tempy = n_h-joints[j+1]
-    newy = center[0]+M[0][0]*(tempy-center[0]) + (tempx-center[1])*M[1][0]
-    newx = center[1]+M[0][1]*(tempy-center[0]) + (tempx-center[1])*M[1][1]
+    #newy = center[0]+M[0][0]*(tempy-center[0]) + (tempx-center[1])*M[1][0]
+    #newx = center[1]+M[0][1]*(tempy-center[0]) + (tempx-center[1])*M[1][1]
+    newy = M[1][1]*(tempy) + (tempx)*M[1][0]+M[1][2]
+    newx = M[0][1]*(tempy) + (tempx)*M[0][0]+M[0][2]
     joints_new[j] = newx
     joints_new[j+1] = newy
     
