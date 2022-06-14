@@ -20,14 +20,14 @@ import numpy as np, pandas as pd
 import matplotlib.pyplot as plt
 
 ### Read the HDF5 file
-filename = "/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/012122 Spider Piezo 5Hz 75 182 With Pulses 2Sdelayed 2-01212022132058-0000-1_trimmedDLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000.h5"
+filename = "/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/1101 Spider Piezo 5Hz 0 107 With Pulses 2Sdelayed 2-11012021154002-0000-1_cropDLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000.h5"
 f1 = h5py.File(filename,'r+')
 data_joints = f1['df_with_missing']['table'][:]
 
 
 
 ### Read the pickle file
-pickle_file = pd.read_pickle("/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/012122 Spider Piezo 5Hz 75 182 With Pulses 2Sdelayed 2-01212022132058-0000-1_trimmedDLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000_meta.pickle")
+pickle_file = pd.read_pickle("/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/1101 Spider Piezo 5Hz 0 107 With Pulses 2Sdelayed 2-11012021154002-0000-1_cropDLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000_meta.pickle")
 pickle_file = pickle_file['data']
 fps = pickle_file['fps']
 nframes = pickle_file['nframes']

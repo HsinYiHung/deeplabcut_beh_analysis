@@ -14,7 +14,7 @@ import cv2
 
 
 ### Read the HDF5 file
-filename = "/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/011922 Spider Piezo 5Hz 0 107 With Pulses 2Sdelayed-01192022153653-0000-1DLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000.h5"
+filename = "/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/1101 Spider Piezo 5Hz 0 107 With Pulses 2Sdelayed 2-11012021154002-0000-1_cropDLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000.h5"
 
 #f1 = h5py.File(filename.split('/videos/')[0] +'/videos/aligned/'+filename.split('/videos/')[1],'r+')
 f1 = h5py.File(filename,'r+')

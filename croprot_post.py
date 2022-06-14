@@ -13,16 +13,16 @@ import cv2
 
 
 ### Read the HDF5 file
-filename = "/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/1101 Spider Piezo 5Hz 0 107 With Pulses 2Sdelayed 2-11012021154002-0000-1DLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000.h5"
+filename = "/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/011822  Spider Piezo 5Hz 75 182 With Pulses 2Sdelayed-01182022141158-0000-1DLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000.h5"
 f1 = h5py.File(filename,'r+')
 data_joints = f1['df_with_missing']['table'][:]
 
 ### Video name 
-vid_name = '/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/1101 Spider Piezo 5Hz 0 107 With Pulses 2Sdelayed 2-11012021154002-0000-1.mp4'
+vid_name = '/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/011822  Spider Piezo 5Hz 75 182 With Pulses 2Sdelayed-01182022141158-0000-1.mp4'
 
 
 ### Read the pickle file
-pickle_file = pd.read_pickle("/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/1101 Spider Piezo 5Hz 0 107 With Pulses 2Sdelayed 2-11012021154002-0000-1DLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000_meta.pickle")
+pickle_file = pd.read_pickle("/Users/hsinyihung/Documents/DeepLabCut/8videos_1400frames_relabled/videos/011822  Spider Piezo 5Hz 75 182 With Pulses 2Sdelayed-01182022141158-0000-1DLC_resnet50_8videos_1400frames_relabledApr12shuffle1_50000_meta.pickle")
 pickle_file = pickle_file['data']
 fps = pickle_file['fps']
 nframes = pickle_file['nframes']
