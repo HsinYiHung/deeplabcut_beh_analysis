@@ -10,11 +10,11 @@ from croprot_videoalignment import *
 import os, glob
 
 
-directory = '/Users/hsinyihung/Documents/DeepLabCut/DeepLabcut_Anthony/videos'    
+directory = 'C:/Users/Hsin-Yi/Documents/GitHub/DeepLabCut/DeepLabCut_Anthony/videos'    
 
 files = glob.glob(directory+'/*DLC*.h5')
 
-for i in range(29,len(files)):
+for i in range(35,len(files)):
     filename = files[i]
     joints = check_model_labels(filename)
     croprot_videoalignment(filename, joints)

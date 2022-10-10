@@ -111,6 +111,7 @@ def croprot_videoalignment(filename = None, joints=None):
     
     new_img = np.copy(img)
     slope = -(py-ay)/(px-ax)
+
     n_h, n_w, n_color  = new_img.shape
     
     center = (n_h/2, n_w/2)
@@ -131,7 +132,8 @@ def croprot_videoalignment(filename = None, joints=None):
             for i in range(len(buf)):
                 buf[i] = cv2.flip(buf[i],0)
             rot_degree = -(-90- np.rad2deg(math.atan(slope)))
-                
+    if np.isnan(slope):
+        rot_degree = 0
     M = cv2.getRotationMatrix2D(center, rot_degree, scale=1)
     
     joints_new = np.copy(joints)
