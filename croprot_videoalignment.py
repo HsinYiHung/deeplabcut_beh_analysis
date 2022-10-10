@@ -63,7 +63,7 @@ def croprot_videoalignment(filename = None, joints=None):
     frameHeight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
     buf = np.empty((frameCount, frameHeight, frameWidth, 3), np.dtype('uint8'))
-    buf_new = np.empty((frameCount, frameHeight, frameWidth, 3), np.dtype('uint8'))
+    #buf_new = np.empty((frameCount, frameHeight, frameWidth, 3), np.dtype('uint8'))
 
 
     fc = 0
@@ -167,7 +167,8 @@ def croprot_videoalignment(filename = None, joints=None):
     for i in range(len(buf)):
         new_img = np.copy(buf[i])
         rotated = cv2.warpAffine(new_img, M, (n_w,n_h))
-        buf_new[i] = rotated
+        #buf_new[i] = rotated
+        buf[i] = rotated
         
         for j in range(0,60,3):
             c = tuple([s * 255 for s in rgb[int(j/3)]][0:3])
@@ -175,8 +176,10 @@ def croprot_videoalignment(filename = None, joints=None):
             
             if joints_new[j+2][i]>0.5:
                 
-                buf_new[i] = cv2.circle(buf_new[i], (int(joints_new[j][i]),int(joints_new[j+1][i])), radius=10, color=c, thickness=-1)
-        
+                #buf_new[i] = cv2.circle(buf_new[i], (int(joints_new[j][i]),int(joints_new[j+1][i])), radius=10, color=c, thickness=-1)
+                buf[i] = cv2.circle(buf[i], (int(joints_new[j][i]), int(joints_new[j + 1][i])), radius=10,
+                                        color=c, thickness=-1)
+
         #f1['df_with_missing']['table'][:][i][1] = joints_new[:,i]
         #data['table'][:][i][1] = joints_new[:,i]
         #data_temp[:][i][1] = joints_new[:,i]
@@ -190,8 +193,12 @@ def croprot_videoalignment(filename = None, joints=None):
     fourcc = VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(vid_name.split('/videos')[0]+'/videos/aligned'+vid_name.split('/videos')[1].replace(".mp4", "_croprotaligned.mp4"),fourcc,100, (n_w, n_h) )
     
-    for i in range(len(buf_new)):
-        out.write(buf_new[i])
+    #for i in range(len(buf_new)):
+    #    out.write(buf_new[i])
+    #out.release()
+
+    for i in range(len(buf)):
+        out.write(buf[i])
     out.release()
     
     np.save(vid_name.split('/videos')[0]+'/videos/aligned'+vid_name.split('/videos')[1].replace(".mp4", "_croprotaligned.npy"), joints_new)
