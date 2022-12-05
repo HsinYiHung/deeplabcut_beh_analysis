@@ -179,6 +179,7 @@ def croprot_videoalignment(filename = None, joints=None):
                 #buf_new[i] = cv2.circle(buf_new[i], (int(joints_new[j][i]),int(joints_new[j+1][i])), radius=10, color=c, thickness=-1)
                 buf[i] = cv2.circle(buf[i], (int(joints_new[j][i]), int(joints_new[j + 1][i])), radius=10,
                                         color=c, thickness=-1)
+                buf[i] = cv2.putText(img=buf[i], text=str(i), fontScale=3.0,org = (200, 200),fontFace = cv2.FONT_HERSHEY_DUPLEX, color = (125, 246, 55))
 
         #f1['df_with_missing']['table'][:][i][1] = joints_new[:,i]
         #data['table'][:][i][1] = joints_new[:,i]
