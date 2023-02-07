@@ -193,7 +193,11 @@ def croprot_videoalignment(filename = None, joints=None):
     from cv2 import VideoWriter_fourcc
     fourcc = VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(vid_name.split('/videos')[0]+'/videos/aligned'+vid_name.split('/videos')[1].replace(".mp4", "_croprotaligned.mp4"),fourcc,100, (n_w, n_h) )
-    
+    #out = cv2.VideoWriter(
+    #    vid_name.split('/videos')[0] + '/videos' + vid_name.split('/videos')[1].replace(".mp4",
+    #                                                                                            "_croprotaligned.mp4"),
+    #    fourcc, 100, (n_w, n_h))
+
     #for i in range(len(buf_new)):
     #    out.write(buf_new[i])
     #out.release()
@@ -203,6 +207,7 @@ def croprot_videoalignment(filename = None, joints=None):
     out.release()
     
     np.save(vid_name.split('/videos')[0]+'/videos/aligned'+vid_name.split('/videos')[1].replace(".mp4", "_croprotaligned.npy"), joints_new)
+    #np.save(vid_name.split('/videos')[0] + '/videos' + vid_name.split('/videos')[1].replace(".mp4", "_croprotaligned.npy"),joints_new)
     #FFMpegWriter = manimation.writers['ffmpeg']
     #metadata = dict(title='Movie Test', artist='Matplotlib',
     #                comment='Movie support!') 
